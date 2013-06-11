@@ -12,6 +12,11 @@ Into an existing rails app, add FedoraRails to the Gemfile
 gem 'fedora_rails'
 ```
 
+```
+rails g fedora_rails:install
+```
+
+
 ## Adding FedoraRails to Rails app
 For each ActiveRecord object that you wish to store in a Fedora repository, add the following just below the class definiton:
 
