@@ -6,7 +6,7 @@ module Concerns::Fedorable
   included do
     has_one :fedora_attribute, as: :fedorable, class_name: 'FedoraRails::FedoraAttributes'
 
-    delegate :pid, :object_exists?,
+    delegate :pid,
       to: :fedora_attribute, allow_nil: true
 
     after_save :synchronize_to_fedora
