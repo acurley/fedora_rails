@@ -4,12 +4,15 @@ module Concerns::Fedorable
   require 'rubydora'
 
   included do
+    attr_accessor :type_of_delete
+
     has_one :fedora_attribute, as: :fedorable, class_name: 'FedoraRails::FedoraAttributes'
 
     delegate :pid,
       to: :fedora_attribute, allow_nil: true
 
     after_save :synchronize_to_fedora
+    after_destroy :delete_from_fedora, :delete_fedora_attribute
     
     @@repo = Rubydora.connect :url => 'http://localhost:8983/fedora', :user => 'fedoraAdmin', :password => 'fedoraAdmin'
 
@@ -23,6 +26,24 @@ module Concerns::Fedorable
     end
 
     private
+
+    def delete_fedora_attribute
+      FedoraRails::FedoraAttributes.where(fedorable: self).destroy
+    end
+
+    # Fedora provides two types of delete: soft and hard. Soft deletes change the state value to D.  
+    # Hard deletes remove the object from the system. Since Fedora is intended for preservation systems, the default 
+    # will be soft delete (set object state = 'D') but will allow for option to pass hard delete.
+    def delete_from_fedora
+      obj = @@repo.find(self.pid)
+      self.type_of_delete ||= 'soft'
+      if self.type_of_delete == 'soft'
+        obj.state =  'D'
+        obj.save
+      else
+        obj.delete
+      end
+    end
 
     def synchronize_to_fedora
       # Check to see that a FedoraAttribute object exists
