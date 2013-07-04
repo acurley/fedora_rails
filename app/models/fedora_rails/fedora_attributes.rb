@@ -1,8 +1,9 @@
 module FedoraRails
-  class FedoraAttributes < ActiveRecord::Base
-    require 'rubydora'
+  class FedoraAttributes
+    include Mongoid::Document
 
-    attr_accessible :pid, :fedorable_id, :fedorable_type
+    require 'rubydora'
+    field :pid, type: String
 
     belongs_to :fedorable, polymorphic: true
     before_save :assign_pid
