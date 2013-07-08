@@ -4,4 +4,9 @@
 # :include method so they can contain FedoraRails::Concerns::Fedorable functionality  
 # 
 # For example:
-#   YourObject.send :include, FedoraRails::Concerns::Fedorable
+#   YourObject.send :include, Concerns::Fedorable
+#
+# or you can create an Array of objects to incorporate FedoraRails functionality
+# ['Object1', 'ObjectY'].each do |fedora_class|
+#  fedora_class.constantize.send :include, Concerns::Fedorable
+# end
