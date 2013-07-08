@@ -1,8 +1,9 @@
 module FedoraRails
   class FedoraAttributes
-    include Mongoid::Document
-
     require 'rubydora'
+    include Mongoid::Document
+    include Mongoid::Timestamps
+
     field :pid, type: String
 
     belongs_to :fedorable, polymorphic: true
