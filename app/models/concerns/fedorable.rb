@@ -48,7 +48,7 @@ module Concerns::Fedorable
     def synchronize_to_fedora
       # Check to see that a FedoraAttribute object exists
       if fedora_attribute.nil?
-        self.fedora_attribute = FedoraRails::FedoraAttributes.create(fedorable_id: self.id, fedorable_type: self.class.name)
+        self.create_fedora_attribute
       end
 
       # Create object if it doesn't exist, otherwise read into memory
