@@ -14,7 +14,7 @@ module Concerns::Fedorable
     after_save :synchronize_to_fedora
     after_destroy :delete_from_fedora, :delete_fedora_attribute
     
-    @@repo = Rubydora.connect :url => 'http://localhost:8983/fedora', :user => 'fedoraAdmin', :password => 'fedoraAdmin'
+    @@repo = Rubydora.connect :url => ENV['FEDORA_URL'], :user => ENV['FEDORA_USER'], :password => ENV['FEDORA_PASS']
 
     def object_exists?
       begin
