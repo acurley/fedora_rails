@@ -25,6 +25,10 @@ module Concerns::Fedorable
       end
     end
 
+    def fedora_link
+      ENV['FEDORA_URL'] + "/" + @@repo.object_url(self.pid)
+    end
+
     private
 
     def delete_fedora_attribute
