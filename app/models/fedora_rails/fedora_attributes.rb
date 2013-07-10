@@ -12,7 +12,7 @@ module FedoraRails
     @@repo = Rubydora.connect :url => ENV['FEDORA_URL'], :user => ENV['FEDORA_USER'], :password => ENV['FEDORA_PASS']
 
     def assign_pid
-      self.pid = @@repo.mint if self.pid.nil?
+      self.pid = @@repo.mint(namespace: ENV['FEDORA_NAMESPACE']) if self.pid.nil?
     end
   end
 end
