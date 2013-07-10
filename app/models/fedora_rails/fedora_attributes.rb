@@ -9,7 +9,7 @@ module FedoraRails
     belongs_to :fedorable, polymorphic: true
     before_save :assign_pid
 
-    @@repo = Rubydora.connect :url => 'http://localhost:8983/fedora', :user => 'fedoraAdmin', :password => 'fedoraAdmin'
+    @@repo = Rubydora.connect :url => ENV['FEDORA_URL'], :user => ENV['FEDORA_USER'], :password => ENV['FEDORA_PASS']
 
     def assign_pid
       self.pid = @@repo.mint if self.pid.nil?
